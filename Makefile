@@ -14,19 +14,8 @@ sync:
 docs_serve: docs
 	cd docs && bundle exec jekyll serve
 
-windows_docs_serve: docs
-	cd docs && docker-compose up --build && docker-compose down
-
 docker_docs_serve: docs
-	mkdir -p ./docs/_site
-	find ./docs/ -type d -exec chmod 755 {} \;
-	find ./docs/ -type f -exec chmod 644 {} \;
-	chmod -R a+rwx ./docs/_site
-	cd docs  
-	docker-compose up --build docs
-	docker-compose down
-	docker-compose up --build clean-docs
-	docker-compose down
+	cd docs && docker-compose up --build && docker-compose down
 
 docs: $(SRC)
 	nbdev_build_docs

@@ -16,6 +16,8 @@ COPY ./Gemfile .
 COPY ./Gemfile.lock .
 RUN bundle install
 
+COPY --chown=jekyll:jekyll . /website/ruby/docs
+
 EXPOSE 4000
 WORKDIR /website/ruby/docs
 CMD bundle exec jekyll serve -H 0.0.0.0 -P 4000

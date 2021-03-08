@@ -1,0 +1,9 @@
+version: "3.8"
+services:
+  docs:
+    build: 
+      context: .
+      dockerfile: ./Dockerfile
+    image: nbdev-jekyll-docs:0.0.1
+    ports:
+      - 127.0.0.1:4000:4000
