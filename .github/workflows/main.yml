@@ -31,5 +31,6 @@ jobs:
     - name: Run tests
       run: |
         docker run -p 127.0.0.1:8080:8080 --rm --name ucrel-science-parse -d ucrel/ucrel-science-parse:3.0.1
+        bash wait_for_docker.sh
         nbdev_test_nbs
         docker stop ucrel-science-parse
