@@ -2,17 +2,17 @@ name: CI
 on: [push, pull_request]
 jobs:
   build:
+    name: build
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - uses: actions/setup-python@v1
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
       with:
         python-version: '3.6'
-        architecture: 'x64'
-    - name: Install the library
+    - name: Install dependencies
       run: |
-        pip install nbdev jupyter
-        pip install -e .
+        pip install -e .[dev]
     - name: Read all notebooks
       run: |
         nbdev_read_nbs
@@ -30,4 +30,6 @@ jobs:
         if [ -n "$(nbdev_diff_nbs)" ]; then echo -e "!!! Detected difference between the notebooks and the library"; false; fi
     - name: Run tests
       run: |
+        docker run -p 127.0.0.1:8080:8080 --rm --name ucrel-science-parse -d ucrel/ucrel-science-parse:3.0.1
         nbdev_test_nbs
+        docker stop ucrel-science-parse
