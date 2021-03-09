@@ -10,6 +10,11 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: '3.6'
+    - name: Setting Python and OS environment variables
+        run: |
+          PYTHON=`python -c "import sys; print('.'.join([str(version) for version in sys.version_info[:3]]))"`
+          echo "PYTHON=${PYTHON}" >> $GITHUB_ENV
+          echo "OS=${{ runner.os }}" >> $GITHUB_ENV
     - name: Install dependencies
       run: |
         pip install .[dev]
@@ -31,3 +36,9 @@ jobs:
         bash wait_for_docker.sh
         make test
         docker stop ucrel-science-parse
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
+      with:
+        file: ./coverage.xml
+        env_vars: OS,PYTHON
+        fail_ci_if_error: false 
