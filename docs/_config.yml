@@ -1,7 +1,7 @@
 repository: UCREL/science_parse_py_api
 output: web
-topnav_title: science_parse_py_api
-site_title: science_parse_py_api
+topnav_title: Science Parse API
+site_title: Science Parse API
 company_name: UCREL
 description: Python API for Science Parse
 # Set to false to disable KaTeX math

@@ -13,6 +13,6 @@ entries:
       title: API
       url: api.html
     output: web
-    title: science_parse_py_api
+    title: science_parse_api
   output: web
   title: Sidebar

@@ -14,8 +14,11 @@ sync:
 docs_serve: docs
 	cd docs && bundle exec jekyll serve
 
-docker_docs_serve: docs
-	cd docs && docker-compose up --build && docker-compose down
+docker_docs_serve:
+	nbdev_build_docs
+	cd docs
+	docker-compose up --build
+	docker-compose down
 
 docs: $(SRC)
 	nbdev_build_docs

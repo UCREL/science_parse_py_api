@@ -4,7 +4,7 @@
 
 ## Install
 
-`pip install science_parse_py_api`
+`pip install science_parse_api`
 
 ## Requirements
 
@@ -55,8 +55,14 @@ docker run -p 127.0.0.1:8080:8080 --rm ucrel/ucrel-science-parse:3.0.1
 from pathlib import Path
 from IPython.display import Image
 
-test_pdf_paper = Path('.', 'example_for_test.pdf').resolve()
-Image(filename='./example_test_pdf_as_png.png') 
+
+def test_data_directory() -> Path:
+    return Path('..', 'test_data').resolve()
+
+test_pdf_paper = Path(test_data_directory(), 
+                      'example_for_test.pdf').resolve()
+Image(filename=str(Path(test_data_directory(), 
+                        'example_test_pdf_as_png.png')))
 ```
 
 
@@ -68,7 +74,7 @@ Image(filename='./example_test_pdf_as_png.png')
 
 ```python
 import pprint
-from science_parse_py_api.api import parse_pdf
+from science_parse_api.api import parse_pdf
 
 host = 'http://127.0.0.1'
 port = '8080'
@@ -80,7 +86,7 @@ pp.pprint(output_dict)
 
     {   'abstractText': 'The abstract which is normally short.',
         'authors': [{'affiliations': [], 'name': 'Andrew Moore'}],
-        'id': 'SP:0068e059d3b67b9d1bf75cc821475dcd1a61343c',
+        'id': 'SP:a15cb537733c192e667ff761db193fcccc18ea1e',
         'references': [   {   'authors': [   'Tomas Mikolov',
                                              'Greg Corrado',
                                              'Kai Chen',
@@ -139,6 +145,21 @@ pip install -e .[dev]
 ```
 
 [The `-e` is an editable flag](http://codumentary.blogspot.com/2014/11/python-tip-of-year-pip-install-editable.html) meaning that if you change anything in the library locally Python will keep track on those changes.
+
+### Package is created with nbdev
+
+**Note** as it is created with nbdev the code and documentation is generated from the notebooks that are within the [./module_notebooks folder](./module_notebooks).
+
+**Note** need to run the following once: `nbdev_install_git_hooks`: ["This will set up git hooks which will remove metadata from your notebooks when you commit, greatly reducing the chance you have a conflict."](https://nbdev.fast.ai/tutorial.html#Install-git-hooks-to-avoid-and-handle-conflicts)
+
+The main workflow is the following:
+
+1. Edit the notebook(s) you want within [./module_notebooks folder.](./module_notebooks) **The README is generated from the [./module_notebooks/index.ipynb file.](./module_notebooks/index.ipynb)**
+2. Run `nbdev_build_lib` to convert the notebook(s) into a Python module, which in this case will go into the [./science_parse_api folder](./science_parse_api). **Note** if you created a function in one python module and want to use it in another module then you will need to run `nbdev_build_lib` first, as that python module code needs to be transfered from the [./module_notebooks folder.](./module_notebooks) into the [./science_parse_api folder](./science_parse_api).
+3. Create the documentation using `nbdev_build_docs`.
+4. **Optionally** if you created tests run:
+5. **Optionally** if you would like to see the documentation locally see the [sub-section below.](#local-documentation)
+6. Git add the relevant notebook(s), python module code, and documentation.
 
 ### Local documentation
 

@@ -6,18 +6,3 @@ _If you are using an older version of this template, and want to upgrade to the 
 
 
 
-Following the tutorial:
-
-1. Edit the [settings.ini file](./settings.ini).
-2. Install git hooks to avoid and handle conflicts with respect to notebooks metadata. Run `nbdev_install_git_hooks`. If there are any conflicts later then you can run `nbdev_fix_merge filename.ipynb`
-3. `nbdev_build_lib` -- this builds the python library from the notebooks.
-4. `nbdev_build_docs` -- builds the documentation and creates a README.md
-5. `nbdev_test_nbs` -- performs all of the tests in the notebooks.
-
-Created a docker image to run the documentation locally. This docker script can be run through the make command:
-
-``` bash
-make docker_docs_serve
-```
-
-The [MANIFEST.in](https://packaging.python.org/guides/using-manifest-in/) file is used by the Python package manager to include/exclude files from the source distribution when packaging this software.

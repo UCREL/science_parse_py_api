@@ -9,6 +9,6 @@ modules = ["api.py"]
 
 doc_url = "https://UCREL.github.io/science_parse_py_api/"
 
-git_url = "https://github.com/UCREL/science_parse_py_api/tree/main/"
+git_url = "https://github.com/UCREL/science_parse_py_api/tree/master/"
 
 def custom_doc_links(name): return None
