@@ -23,8 +23,9 @@ docker_docs_serve:
 test:
 	python -m pytest --cov=science_parse_api --cov-report term-missing --cov-report xml --cov-config .coveragerc
 
-release: pypi conda_release
-	nbdev_bump_version
+release: 
+	python -m build
+	python -m twine upload --repository pypi --config-file ./.pypirc dist/*
 
 conda_release:
 	fastrelease_conda_package

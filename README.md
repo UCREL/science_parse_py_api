@@ -8,6 +8,11 @@
     <a href="https://github.com/UCREL/science_parse_py_api/blob/master/LICENSE"> <img alt="License" src="https://img.shields.io/github/license/UCREL/science_parse_py_api"></a>
 </p>
 
+<p align="center">
+    <a href="https://pypi.org/project/science_parse_api/"> <img alt="PyPi" src="https://img.shields.io/pypi/v/science_parse_api"> </a>
+    <a href="https://pypi.org/project/science_parse_api/"> <img alt="Supported Python Versions" src="https://img.shields.io/pypi/pyversions/science_parse_api"> </a>
+</p>
+
 ## Install
 
 `pip install science_parse_api`
