@@ -24,7 +24,7 @@ test:
 	python -m pytest --cov=science_parse_api --cov-report term-missing --cov-report xml --cov-config .coveragerc
 
 release: 
-	python -m build
+	python setup.py sdist bdist_wheel
 	python -m twine upload --repository pypi --config-file ./.pypirc dist/*
 
 conda_release:
