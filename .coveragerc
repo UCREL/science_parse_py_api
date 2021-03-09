@@ -1,0 +1,3 @@
+[report]
+omit = 
+    science_parse_api/_nbdev.py

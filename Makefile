@@ -20,12 +20,8 @@ docker_docs_serve:
 	docker-compose up --build
 	docker-compose down
 
-docs: $(SRC)
-	nbdev_build_docs
-	touch docs
-
 test:
-	nbdev_test_nbs
+	python -m pytest --cov=science_parse_api --cov-report term-missing --cov-report xml --cov-config .coveragerc
 
 release: pypi conda_release
 	nbdev_bump_version

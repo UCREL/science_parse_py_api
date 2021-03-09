@@ -97,16 +97,40 @@ nb_path: "module_notebooks/index.ipynb"
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span> <span class="nn">requests</span>
 
+<span class="kn">from</span> <span class="nn">science_parse_api.test_helper</span> <span class="kn">import</span> <span class="n">test_data_dir</span>
 
-<span class="k">def</span> <span class="nf">test_data_directory</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
-    <span class="k">return</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">,</span> <span class="s1">&#39;test_data&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
-
-<span class="n">test_pdf_paper</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">test_data_directory</span><span class="p">(),</span> 
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1"># Tries to find the folder `test_data`</span>
+    <span class="n">test_data_directory</span> <span class="o">=</span> <span class="n">test_data_dir</span><span class="p">()</span>
+    <span class="n">test_pdf_paper</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">test_data_directory</span><span class="p">,</span> 
                       <span class="s1">&#39;example_for_test.pdf&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
-<span class="n">Image</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">test_data_directory</span><span class="p">(),</span> 
-                        <span class="s1">&#39;example_test_pdf_as_png.png&#39;</span><span class="p">)))</span>
+    <span class="n">image_file_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">test_data_directory</span><span class="p">,</span> 
+                               <span class="s1">&#39;example_test_pdf_as_png.png&#39;</span><span class="p">))</span>
+<span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+    <span class="c1"># If it cannot find that folder will get the pdf and </span>
+    <span class="c1"># image from Github. This will occur if you are using </span>
+    <span class="c1"># Google Colab</span>
+    <span class="n">pdf_url</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;https://github.com/UCREL/science_parse_py_api/&#39;</span>
+               <span class="s1">&#39;raw/master/test_data/example_for_test.pdf&#39;</span><span class="p">)</span>
+    <span class="n">temp_test_pdf_paper</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="s1">&#39;rb+&#39;</span><span class="p">)</span>
+    <span class="n">test_pdf_paper</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">temp_test_pdf_paper</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">test_pdf_paper</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;rb+&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">test_fp</span><span class="p">:</span>
+        <span class="n">test_fp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pdf_url</span><span class="p">)</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+        
+    <span class="n">image_url</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;https://github.com/UCREL/science_parse_py_api&#39;</span>
+                 <span class="s1">&#39;/raw/master/test_data/example_test_pdf_as_png.png&#39;</span><span class="p">)</span>
+    <span class="n">image_file</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="s1">&#39;rb+&#39;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;.png&#39;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">Path</span><span class="p">(</span><span class="n">image_file</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;rb+&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">image_fp</span><span class="p">:</span>
+        <span class="n">image_fp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">image_url</span><span class="p">)</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+    <span class="n">image_file_name</span> <span class="o">=</span> <span class="n">image_file</span><span class="o">.</span><span class="n">name</span>
+    
+
+<span class="n">Image</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">image_file_name</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -164,7 +188,7 @@ nb_path: "module_notebooks/index.ipynb"
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>{   &#39;abstractText&#39;: &#39;The abstract which is normally short.&#39;,
     &#39;authors&#39;: [{&#39;affiliations&#39;: [], &#39;name&#39;: &#39;Andrew Moore&#39;}],
-    &#39;id&#39;: &#39;SP:a15cb537733c192e667ff761db193fcccc18ea1e&#39;,
+    &#39;id&#39;: &#39;SP:045daa3afe8335ca973de6dbed366626376434da&#39;,
     &#39;references&#39;: [   {   &#39;authors&#39;: [   &#39;Tomas Mikolov&#39;,
                                          &#39;Greg Corrado&#39;,
                                          &#39;Kai Chen&#39;,
@@ -245,7 +269,7 @@ nb_path: "module_notebooks/index.ipynb"
 <li>Edit the notebook(s) you want within <a href="./module_notebooks">./module_notebooks folder.</a> <strong>The README is generated from the <a href="./module_notebooks/index.ipynb">./module_notebooks/index.ipynb file.</a></strong></li>
 <li>Run <code>nbdev_build_lib</code> to convert the notebook(s) into a Python module, which in this case will go into the <a href="./science_parse_api">./science_parse_api folder</a>. <strong>Note</strong> if you created a function in one python module and want to use it in another module then you will need to run <code>nbdev_build_lib</code> first, as that python module code needs to be transfered from the <a href="./module_notebooks">./module_notebooks folder.</a> into the <a href="./science_parse_api">./science_parse_api folder</a>.</li>
 <li>Create the documentation using <code>nbdev_build_docs</code>.</li>
-<li><strong>Optionally</strong> if you created tests run:</li>
+<li><strong>Optionally</strong> if you created tests run them using <code>make test</code>. When you do add tests in the notebooks you will need to import the function from the module and not rely on the function already expressed in the notebook, this is to ensure that code coverage is calculated correctly.</li>
 <li><strong>Optionally</strong> if you would like to see the documentation locally see the <a href="#local-documentation">sub-section below.</a></li>
 <li>Git add the relevant notebook(s), python module code, and documentation.</li>
 </ol>

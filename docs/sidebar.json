@@ -1,6 +1,7 @@
 {
   "science_parse_api": {
     "Overview": "/",
-    "API": "api.html"
+    "API": "api.html",
+    "Test Helper ": "test_helper.html"
   }
 }

@@ -53,16 +53,40 @@ docker run -p 127.0.0.1:8080:8080 --rm ucrel/ucrel-science-parse:3.0.1
 
 ```python
 from pathlib import Path
+import tempfile
+
 from IPython.display import Image
+import requests
 
+from science_parse_api.test_helper import test_data_dir
 
-def test_data_directory() -> Path:
-    return Path('..', 'test_data').resolve()
-
-test_pdf_paper = Path(test_data_directory(), 
+try:
+    # Tries to find the folder `test_data`
+    test_data_directory = test_data_dir()
+    test_pdf_paper = Path(test_data_directory, 
                       'example_for_test.pdf').resolve()
-Image(filename=str(Path(test_data_directory(), 
-                        'example_test_pdf_as_png.png')))
+    image_file_name = str(Path(test_data_directory, 
+                               'example_test_pdf_as_png.png'))
+except FileNotFoundError:
+    # If it cannot find that folder will get the pdf and 
+    # image from Github. This will occur if you are using 
+    # Google Colab
+    pdf_url = ('https://github.com/UCREL/science_parse_py_api/'
+               'raw/master/test_data/example_for_test.pdf')
+    temp_test_pdf_paper = tempfile.NamedTemporaryFile('rb+')
+    test_pdf_paper = Path(temp_test_pdf_paper.name)
+    with test_pdf_paper.open('rb+') as test_fp:
+        test_fp.write(requests.get(pdf_url).content)
+        
+    image_url = ('https://github.com/UCREL/science_parse_py_api'
+                 '/raw/master/test_data/example_test_pdf_as_png.png')
+    image_file = tempfile.NamedTemporaryFile('rb+', suffix='.png')
+    with Path(image_file.name).open('rb+') as image_fp:
+        image_fp.write(requests.get(image_url).content)
+    image_file_name = image_file.name
+    
+
+Image(filename=image_file_name)
 ```
 
 
@@ -86,7 +110,7 @@ pp.pprint(output_dict)
 
     {   'abstractText': 'The abstract which is normally short.',
         'authors': [{'affiliations': [], 'name': 'Andrew Moore'}],
-        'id': 'SP:a15cb537733c192e667ff761db193fcccc18ea1e',
+        'id': 'SP:045daa3afe8335ca973de6dbed366626376434da',
         'references': [   {   'authors': [   'Tomas Mikolov',
                                              'Greg Corrado',
                                              'Kai Chen',
@@ -157,7 +181,7 @@ The main workflow is the following:
 1. Edit the notebook(s) you want within [./module_notebooks folder.](./module_notebooks) **The README is generated from the [./module_notebooks/index.ipynb file.](./module_notebooks/index.ipynb)**
 2. Run `nbdev_build_lib` to convert the notebook(s) into a Python module, which in this case will go into the [./science_parse_api folder](./science_parse_api). **Note** if you created a function in one python module and want to use it in another module then you will need to run `nbdev_build_lib` first, as that python module code needs to be transfered from the [./module_notebooks folder.](./module_notebooks) into the [./science_parse_api folder](./science_parse_api).
 3. Create the documentation using `nbdev_build_docs`.
-4. **Optionally** if you created tests run:
+4. **Optionally** if you created tests run them using `make test`. When you do add tests in the notebooks you will need to import the function from the module and not rely on the function already expressed in the notebook, this is to ensure that code coverage is calculated correctly.
 5. **Optionally** if you would like to see the documentation locally see the [sub-section below.](#local-documentation)
 6. Git add the relevant notebook(s), python module code, and documentation.
 

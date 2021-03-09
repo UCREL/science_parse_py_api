@@ -3,9 +3,11 @@
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
 index = {"parse_pdf": "00_api.ipynb",
-         "logger": "00_api.ipynb"}
+         "logger": "00_api.ipynb",
+         "test_data_dir": "01_test_helper.ipynb"}
 
-modules = ["api.py"]
+modules = ["api.py",
+           "test_helper.py"]
 
 doc_url = "https://UCREL.github.io/science_parse_py_api/"
 
