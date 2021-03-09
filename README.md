@@ -2,6 +2,12 @@
 > A Python API for the <a href='https://github.com/allenai/science-parse'>Science Parse server</a>.
 
 
+<p align="center">
+    <a href="https://github.com/UCREL/science_parse_py_api/actions/workflows/main.yml"> <img alt="CI" src="https://github.com/UCREL/science_parse_py_api/actions/workflows/main.yml/badge.svg?branch=master&event=push"></a>    
+    <a href="https://codecov.io/gh/UCREL/science_parse_py_api"> <img alt="Codecov" src="https://codecov.io/gh/UCREL/science_parse_py_api/branch/master/graph/badge.svg"></a>
+    <a href="https://github.com/UCREL/science_parse_py_api/blob/master/LICENSE"> <img alt="License" src="https://img.shields.io/github/license/UCREL/science_parse_py_api"></a>
+</p>
+
 ## Install
 
 `pip install science_parse_api`
@@ -92,7 +98,7 @@ Image(filename=image_file_name)
 
 
 
-![png](docs/images/output_6_0.png)
+![png](docs/images/output_7_0.png)
 
 
 
