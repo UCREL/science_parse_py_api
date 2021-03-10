@@ -290,6 +290,12 @@ nb_path: "module_notebooks/index.ipynb"
 <div class="highlight"><pre><span></span>make docker_docs_serve
 </pre></div>
 <p><strong>NOTE</strong> This documentation does not update automatically, so it requires re-running this make command each time you want to see an updated version of the documentation.</p>
+<h3 id="PYPI-Package-release">PYPI Package release<a class="anchor-link" href="#PYPI-Package-release"> </a></h3><p>To release an updated version of the package:</p>
+<ol>
+<li>Change the version number in <a href="./settings.ini">./settings.ini</a></li>
+<li>Build the library using <code>nbdev_build_lib</code></li>
+<li>Then make the package and upload it to PYPI using <code>make release</code></li>
+</ol>
 
 </div>
 </div>

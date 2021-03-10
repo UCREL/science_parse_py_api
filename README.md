@@ -206,6 +206,14 @@ make docker_docs_serve
 
 **NOTE** This documentation does not update automatically, so it requires re-running this make command each time you want to see an updated version of the documentation.
 
+### PYPI Package release
+
+To release an updated version of the package:
+
+1. Change the version number in [./settings.ini](./settings.ini)
+2. Build the library using `nbdev_build_lib`
+3. Then make the package and upload it to PYPI using `make release`
+
 ## Acknowledgement
 
 The work has been funded by the [UCREL research centre at Lancaster University](http://ucrel.lancs.ac.uk/).
