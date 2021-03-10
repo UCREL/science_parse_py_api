@@ -16,5 +16,5 @@ release: clean
 	python -m twine upload --repository pypi --config-file ./.pypirc dist/*
 
 clean:
-	rm -r build
-	rm -r dist
+	rm -rf build
+	rm -rf dist
