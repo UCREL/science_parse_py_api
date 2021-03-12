@@ -22,7 +22,7 @@
 This also requires that you have a science parse server running. This can be done through docker:
 
 ```
-docker run -p 127.0.0.1:8080:8080 --rm ucrel/ucrel-science-parse:3.0.1
+docker run -p 127.0.0.1:8080:8080 --rm --init ucrel/ucrel-science-parse:3.0.1
 ```
 
 For versions of Science Parse < 3.0.1 see the [AllenAI docker hub](https://hub.docker.com/r/allenai/scienceparse).
@@ -30,7 +30,7 @@ For versions of Science Parse < 3.0.1 see the [AllenAI docker hub](https://hub.d
 If you would like to run the docker image with less memory (default is 8GB) then the following command will run it with a limit of 6GB:
 
 ```
-docker run -p 127.0.0.1:8080:8080 --rm --memory=6g --memory-swap=6g --env JAVA_MEMORY=5 ucrel/ucrel-science-parse:3.0.1
+docker run -p 127.0.0.1:8080:8080 --rm --init --memory=6g --memory-swap=6g --env JAVA_MEMORY=5 ucrel/ucrel-science-parse:3.0.1
 ```
 
 For more details on this docker image see the [UCREL docker hub page](https://hub.docker.com/r/ucrel/ucrel-science-parse).
@@ -59,10 +59,10 @@ It will then return the parsed PDF as a Python dictionary with the following key
 The example below shows how to use the `pdf_parse` function and the expected output format. In this example we ran the science parse server using docker e.g.:
 
 ```
-docker run -p 127.0.0.1:8080:8080 --rm ucrel/ucrel-science-parse:3.0.1
+docker run -p 127.0.0.1:8080:8080 --rm --init ucrel/ucrel-science-parse:3.0.1
 ```
 
-```python
+```
 from pathlib import Path
 import tempfile
 
@@ -107,7 +107,7 @@ Image(filename=image_file_name)
 
 
 
-```python
+```
 import pprint
 from science_parse_api.api import parse_pdf
 

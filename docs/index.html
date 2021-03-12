@@ -59,11 +59,11 @@ nb_path: "module_notebooks/index.ipynb"
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Requirements">Requirements<a class="anchor-link" href="#Requirements"> </a></h2><p>This also requires that you have a science parse server running. This can be done through docker:</p>
 
-<pre><code>docker run -p 127.0.0.1:8080:8080 --rm ucrel/ucrel-science-parse:3.0.1</code></pre>
+<pre><code>docker run -p 127.0.0.1:8080:8080 --rm --init ucrel/ucrel-science-parse:3.0.1</code></pre>
 <p>For versions of Science Parse &lt; 3.0.1 see the <a href="https://hub.docker.com/r/allenai/scienceparse">AllenAI docker hub</a>.</p>
 <p>If you would like to run the docker image with less memory (default is 8GB) then the following command will run it with a limit of 6GB:</p>
 
-<pre><code>docker run -p 127.0.0.1:8080:8080 --rm --memory=6g --memory-swap=6g --env JAVA_MEMORY=5 ucrel/ucrel-science-parse:3.0.1</code></pre>
+<pre><code>docker run -p 127.0.0.1:8080:8080 --rm --init --memory=6g --memory-swap=6g --env JAVA_MEMORY=5 ucrel/ucrel-science-parse:3.0.1</code></pre>
 <p>For more details on this docker image see the <a href="https://hub.docker.com/r/ucrel/ucrel-science-parse">UCREL docker hub page</a>.</p>
 <p><strong>Note</strong> from the <a href="https://github.com/allenai/science-parse/tree/master/cli#memory">science parse GitHub</a> it is recomended to run the science parse server with 6GB of memory for the Java process e.g. <code>JAVA_MEMORY=6</code></p>
 
@@ -97,7 +97,7 @@ nb_path: "module_notebooks/index.ipynb"
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Example">Example<a class="anchor-link" href="#Example"> </a></h2><p>The example below shows how to use the <code>pdf_parse</code> function and the expected output format. In this example we ran the science parse server using docker e.g.:</p>
 
-<pre><code>docker run -p 127.0.0.1:8080:8080 --rm ucrel/ucrel-science-parse:3.0.1</code></pre>
+<pre><code>docker run -p 127.0.0.1:8080:8080 --rm --init ucrel/ucrel-science-parse:3.0.1</code></pre>
 
 </div>
 </div>
