@@ -11,7 +11,7 @@ import requests
 
 logger = logging.getLogger(__name__)
 
-def parse_pdf(server_address: str, file_path: Path, port: Optional[str], timeout: int = 60
+def parse_pdf(server_address: str, file_path: Path, port: str = '', timeout: int = 60
               ) -> Optional[Dict[str, Any]]:
     '''
     This function if successful returns the JSON output of the
